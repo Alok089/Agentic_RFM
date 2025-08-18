@@ -21,7 +21,13 @@ def get_segment(r_score, f_score, m_score):
         return 'dormant'
     if f_score == 1:
         return 'new'
-    return 'dormant'
+    if ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) >= 3:
+        return 'High Potential'
+    if ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) < 3 and ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) > 2:
+        return 'Mid Potential'
+    if ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) <= 2:
+        return 'Low Potential'
+    return 'NA'
 
 
 # --- Main route to handle form submission and display results ---
@@ -30,6 +36,7 @@ def rfm_calculator():
     customers_list = None
     message = None
     error = None
+    RFM_summary = None
 
     if request.method == 'POST':
         if 'file' not in request.files:
@@ -69,13 +76,19 @@ def rfm_calculator():
 
                         rfm['Segment'] = rfm.apply(
                             lambda row: get_segment(row['R_Score'], row['F_Score'], row['M_Score']), axis=1)
-                        customers_list = rfm.reset_index().to_dict('records')
+                        rfm = rfm.reset_index()
+                        customers_list = rfm.to_dict('records')[:5]
+                        RFM_summary = rfm.groupby('Segment').agg(customers=('customer_id','nunique'),
+                                                                 Last_Purchase=('Recency', 'mean'),
+                                                                 Purchases=('Frequency', 'mean'),
+                                                                 ATS=('Monetary','mean')).reset_index().round(2).to_dict('records')
                         message = 'RFM calculation successful!'
+                        print(RFM_summary)
 
                 except Exception as e:
                     error = f'Error processing file: {str(e)}'
 
-    return render_template('index.html', customers=customers_list, message=message, error=error)
+    return render_template('index.html', customers=customers_list, message=message, error=error,RFM_summary=RFM_summary)
 
 
 if __name__ == '__main__':
