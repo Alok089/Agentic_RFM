@@ -12,19 +12,40 @@ app = Flask(__name__)
 
 # --- The core RFM logic: The Agent's "model" ---
 # This function takes a customer's R, F, and M scores and returns their segment.
+# def get_segment(r_score, f_score, m_score):
+#     if r_score >= 4 and f_score >= 4 and m_score >= 4:
+#         return 'champion'
+#     if r_score >= 3 and f_score >= 4 and m_score >= 4:
+#         return 'loyal'
+#     if r_score >= 4 and f_score < 3 and m_score < 3:
+#         return 'promising'
+#     if r_score < 3 and f_score >= 3:
+#         return 'at-risk'
+#     if r_score < 2 and f_score < 3:
+#         return 'dormant'
+#     if f_score == 1:
+#         return 'new'
+#     if ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) >= 3:
+#         return 'High Potential'
+#     if ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) < 3 and ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) > 2:
+#         return 'Mid Potential'
+#     if ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) <= 2:
+#         return 'Low Potential'
+#     return 'NA'
+
 def get_segment(r_score, f_score, m_score):
-    if r_score >= 4 and f_score >= 4 and m_score >= 4:
+    if r_score == 5 and f_score == 5 and m_score == 5:
         return 'champion'
-    if r_score >= 3 and f_score >= 4 and m_score >= 4:
+    if r_score == 5 and f_score == 1 and m_score == 1:
+        return 'new'
+    if r_score == 1 and f_score == 1 and m_score == 1:
+        return 'dormant'
+    if r_score >= 3 and f_score >= 3:
         return 'loyal'
-    if r_score >= 4 and f_score < 3 and m_score < 3:
-        return 'promising'
     if r_score < 3 and f_score >= 3:
         return 'at-risk'
-    if r_score < 2 and f_score < 3:
-        return 'dormant'
-    if f_score == 1:
-        return 'new'
+    if r_score >= 3 and f_score < 3:
+        return 'promising'
     if ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) >= 3:
         return 'High Potential'
     if ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) < 3 and ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) > 2:
@@ -32,7 +53,6 @@ def get_segment(r_score, f_score, m_score):
     if ((r_score*0.2) + (f_score*0.3) + (m_score*0.5)) <= 2:
         return 'Low Potential'
     return 'NA'
-
 
 # --- Main route to handle form submission and display results ---
 @app.route('/', methods=['GET', 'POST'])
