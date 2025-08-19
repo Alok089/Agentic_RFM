@@ -5,7 +5,7 @@ import datetime
 # --- Configuration for the dataset ---
 NUM_RECORDS = 9000
 NUM_CUSTOMERS = 500  # Number of unique customers
-START_DATE = datetime.date(2023, 1, 1)
+START_DATE = datetime.date(2025, 1, 1)
 END_DATE = datetime.date.today()
 
 # --- Generate dummy data ---
