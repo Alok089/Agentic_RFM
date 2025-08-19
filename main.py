@@ -2,7 +2,11 @@ from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import datetime
 import os
-
+import matplotlib
+matplotlib.use('Agg')  # This is the fix: use the 'Agg' backend for non-GUI environments
+import matplotlib.pyplot as plt
+import io
+import base64
 app = Flask(__name__)
 
 
@@ -37,6 +41,7 @@ def rfm_calculator():
     message = None
     error = None
     RFM_summary = None
+    chart_data = None
 
     if request.method == 'POST':
         if 'file' not in request.files:
@@ -82,13 +87,28 @@ def rfm_calculator():
                                                                  Last_Purchase=('Recency', 'mean'),
                                                                  Purchases=('Frequency', 'mean'),
                                                                  ATS=('Monetary','mean')).reset_index().round(2).to_dict('records')
+                        # --- Generate Pie Chart ---
+                        fig, ax = plt.subplots(figsize=(8, 8))
+                        segments_labels = [s['Segment'] for s in RFM_summary]
+                        customer_counts = [s['customers'] for s in RFM_summary]
+
+                        ax.pie(customer_counts, labels=segments_labels, autopct='%1.1f%%', startangle=90)
+                        ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+                        ax.set_title('Customer Distribution by Segment')
+
+                        # Save the chart to an in-memory buffer
+                        buffer = io.BytesIO()
+                        fig.savefig(buffer, format='png', bbox_inches='tight')
+                        buffer.seek(0)
+                        chart_data = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
                         message = 'RFM calculation successful!'
                         print(RFM_summary)
 
                 except Exception as e:
                     error = f'Error processing file: {str(e)}'
 
-    return render_template('index.html', customers=customers_list, message=message, error=error,RFM_summary=RFM_summary)
+    return render_template('index.html', customers=customers_list, message=message, error=error,RFM_summary=RFM_summary,chart_data=chart_data)
 
 
 if __name__ == '__main__':

@@ -97,6 +97,14 @@
                 </tbody>
             </table>
             <h2 class="text-2xl font-bold mb-4 text-center text-indigo-700">RFM Segment Summary</h2>
+            {% if chart_data %}
+                <div class="w-full max-w-4xl bg-white rounded-xl shadow-2xl p-8 mb-8">
+                    <h2 class="text-2xl font-bold mb-4 text-center text-indigo-700">Customer Distribution by Segment</h2>
+                    <div class="flex justify-center">
+                        <img src="data:image/png;base64,{{ chart_data }}" alt="RFM Customer Segments Pie Chart">
+                    </div>
+                </div>
+            {% endif %}
             <table class="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden shadow-md">
                 <thead class="bg-indigo-100">
                     <tr>

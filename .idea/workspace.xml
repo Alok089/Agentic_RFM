@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5bdb117b-0522-49e1-b2d8-e2198d1172ad" name="Changes" comment="Agentic RFM, trying to allow inputs of a file with RFM records">
+    <list default="true" id="5bdb117b-0522-49e1-b2d8-e2198d1172ad" name="Changes" comment="Agentic RFM, added summary information">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
@@ -103,19 +103,28 @@
       <option name="project" value="LOCAL" />
       <updated>1754903721279</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Agentic RFM, added summary information">
+      <option name="closed" value="true" />
+      <created>1755515255924</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1755515255924</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Agentic RFM, trying to allow inputs of a file with RFM records" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agentic RFM, trying to allow inputs of a file with RFM records" />
+    <MESSAGE value="Agentic RFM, added summary information" />
+    <option name="LAST_COMMIT_MESSAGE" value="Agentic RFM, added summary information" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>33</line>
+          <line>37</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
